@@ -25,6 +25,8 @@ _PREDEFINED_SPLITS_TEXT = {
     "ic15_train": ("ic15/train_images", "ic15/train_37voc.json"),
     "textocr1": ("textocr/train_images", "textocr/train_37voc_1.json"),
     "textocr2": ("textocr/train_images", "textocr/train_37voc_2.json"),
+    "film_annotated_train": ("film_annotated/train_images", "film_annotated/train_37voc.json"),
+
 
     # 96 voc_size
     "syntext1_96voc": ("syntext1/train_images", "syntext1/annotations/train_96voc.json"),
@@ -48,6 +50,8 @@ _PREDEFINED_SPLITS_TEXT = {
     "ctw1500_test": ("ctw1500/test_images", "ctw1500/test.json"),
     "inversetext_test": ("inversetext/test_images", "inversetext/test.json"),
     "rects_test": ("ReCTS/ReCTS_test_images", "ReCTS/rects_test.json"),
+    "film_test": ("film_sample/test", "film_sample/test.json"),
+    "film_annotated_test": ("film_annotated/test_images", "film_annotated/test.json"),
 }
 
 metadata_text = {
@@ -66,6 +70,7 @@ def register_all_coco(root="datasets", voc_size_cfg=37, num_pts_cfg=25):
         )
     for key, (image_root, json_file) in _PREDEFINED_SPLITS_TEXT.items():
         # Assume pre-defined datasets live in `./datasets`.
+        print(f"registering {key}")
         register_text_instances(
             key,
             metadata_text,
@@ -95,4 +100,5 @@ parser.add_argument(
 args = parser.parse_args()
 cfg = get_cfg()
 cfg.merge_from_file(args.config_file)
+print("registering datasets")
 register_all_coco(voc_size_cfg=cfg.MODEL.TRANSFORMER.VOC_SIZE, num_pts_cfg=cfg.MODEL.TRANSFORMER.NUM_POINTS)

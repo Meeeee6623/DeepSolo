@@ -1,0 +1,17 @@
+# Ignore specific directories
+slurm-runs/
+fast-slurm-runs/
+tmp/
+weights/
+build/
+figs/
+output/
+pretrained_backbone/
+adet/
+recovered_files/
+AdelaiDet*/*
+
+# Ignore everything in datasets/ except those containing 'film'
+datasets/*
+!datasets/*film*/
+
