@@ -3,7 +3,7 @@
 #SBATCH --job-name=evaluate_bw_datasets                       # Job name
 #SBATCH --output=./slurm-runs/result-%j.out            # Standard output and error log
 #SBATCH --error=./slurm-runs/error-%j.err              # Error file
-#SBATCH --partition=gpu-v100-32gb         # Specify the GPU partition
+#SBATCH --partition=OOD_gpu_32gb          # Specify the GPU partition
 #SBATCH --gres=gpu:1                      # Request 1 GPU
 #SBATCH --mem=256G                         # Memory total in GB
 #SBATCH --ntasks=1                        # Run on a single CPU
