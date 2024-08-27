@@ -3,7 +3,7 @@
 #SBATCH --job-name=pretrain_film                       # Job name
 #SBATCH --output=./training/result-%j.out            # Standard output and error log
 #SBATCH --error=./training/error-%j.err              # Error file
-#SBATCH --partition=gpu-v100-32gb         # Specify the GPU partition
+#SBATCH --partition=OOD_gpu_32gb         # Specify the GPU partition
 #SBATCH --gres=gpu:2                      # Request 2 GPUs
 #SBATCH --mem=64G                         # Memory total in GB
 #SBATCH --ntasks=1                        # Run on a single CPU
