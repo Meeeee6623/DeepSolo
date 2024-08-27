@@ -19,3 +19,5 @@ SOLVER:
 
 TEST:
   EVAL_PERIOD: 10000
+
+OUTPUT_DIR: "output/R50/150k_tt_mlt_13_15_textocr/train_bw"
