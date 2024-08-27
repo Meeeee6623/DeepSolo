@@ -23,4 +23,4 @@ python --version
 conda run python demo/demo.py --config-file configs/R_50/film/eval_film.yaml --input datasets/film_sample --output output/film_sample_default --opts MODEL.WEIGHTS ./weights/res50_pretrain_synth-tt-mlt-13-15-textocr.pth
 
 # Visualize with finetuned model
-conda run python demo/demo.py --config-file configs/R_50/film/eval_film.yaml --input datasets/film_sample --output output/film_sample_finetuned --opts MODEL.WEIGHTS ./weights/bw_model_final.pth
+conda run python demo/demo.py --config-file configs/R_50/film/eval_film.yaml --input datasets/film_sample --output output/film_sample_finetuned --opts MODEL.WEIGHTS ./output/bw_train_all/model_final.pth
