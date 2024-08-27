@@ -9,7 +9,7 @@ DATASETS:
   TEST: ("totaltext_test",)
 
 SOLVER:
-  IMS_PER_BATCH: 8
+  IMS_PER_BATCH: 2
   BASE_LR: 1e-4
   LR_BACKBONE: 1e-5
   WARMUP_ITERS: 0
