@@ -21,7 +21,7 @@ which python
 python --version
 
 # Evaluate with pretrained model
-conda run python DeepSolo/tools/train_net.py --config-file configs/R_50/film/train_bw.yaml --eval-only MODEL.WEIGHTS ./weights/res50_pretrain_synth-tt-mlt-13-15-textocr.pth
+conda run python tools/train_net.py --config-file configs/R_50/film/train_bw.yaml --eval-only MODEL.WEIGHTS ./weights/res50_pretrain_synth-tt-mlt-13-15-textocr.pth
 
 # Evaluate with finetuned model
-conda run python DeepSolo/tools/train_net.py --config-file configs/R_50/film/train_bw.yaml --eval-only MODEL.WEIGHTS ./weights/bw_model_final.pth
+conda run python tools/train_net.py --config-file configs/R_50/film/train_bw.yaml --eval-only MODEL.WEIGHTS ./weights/bw_model_final.pth
