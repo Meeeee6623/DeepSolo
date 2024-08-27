@@ -40,7 +40,7 @@ export NCCL_DEBUG=INFO
 export NCCL_SOCKET_IFNAME=^docker0,lo
 
 # Run the distributed training script
-srun python -m torch.distributed.launch \
+srun conda run python -m torch.distributed.launch \
     --nproc_per_node=$NUM_GPUS_PER_NODE \
     --nnodes=$NUM_NODES \
     --node_rank=$SLURM_NODEID \
