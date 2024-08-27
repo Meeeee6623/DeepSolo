@@ -24,4 +24,4 @@ python --version
 conda run python tools/train_net.py --config-file configs/R_50/film/train_bw.yaml --eval-only MODEL.WEIGHTS ./weights/res50_pretrain_synth-tt-mlt-13-15-textocr.pth
 
 # Evaluate with finetuned model
-conda run python tools/train_net.py --config-file configs/R_50/film/train_bw.yaml --eval-only MODEL.WEIGHTS ./weights/bw_model_final.pth
+conda run python tools/train_net.py --config-file configs/R_50/film/train_bw.yaml --eval-only MODEL.WEIGHTS ./output/bw_train_all/model_final.pth
