@@ -2,7 +2,7 @@ _BASE_: "../Base_det.yaml"
 
 
 DATASETS:
-  TRAIN: ("film_test,)
+  TRAIN: ("film_test",)
   TEST: ("film_test",)
 
 SOLVER:
