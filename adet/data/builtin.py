@@ -50,7 +50,7 @@ _PREDEFINED_SPLITS_TEXT = {
     "ctw1500_test": ("ctw1500/test_images", "ctw1500/test.json"),
     "inversetext_test": ("inversetext/test_images", "inversetext/test.json"),
     "rects_test": ("ReCTS/ReCTS_test_images", "ReCTS/rects_test.json"),
-    "film_test": ("film_sample/test", "film_sample/test.json"),
+    "film_test": ("film_sample/", "film_sample/test.json"),
     "film_annotated_test": ("film_annotated/test_images", "film_annotated/test.json"),
 }
 
