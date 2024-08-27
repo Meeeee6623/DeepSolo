@@ -44,8 +44,8 @@ srun python -m torch.distributed.launch \
     --nproc_per_node=$NUM_GPUS_PER_NODE \
     --nnodes=$NUM_NODES \
     --node_rank=$SLURM_NODEID \
-    --master_addr=$MASTER_ADDR \
-    --master_port=$MASTER_PORT \
+    --rdzv_backend=c10d \
+    --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
     tools/train_net.py \
     --config-file configs/R_50/film/train_bw.yaml \
     --num-gpus $WORLD_SIZE \
