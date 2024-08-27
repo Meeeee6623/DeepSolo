@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name=pretrain_film                       # Job name
-#SBATCH --output=./slurm-runs/result-%j.out            # Standard output and error log
-#SBATCH --error=./slurm-runs/error-%j.err              # Error file
+#SBATCH --output=./training/result-%j.out            # Standard output and error log
+#SBATCH --error=./training/error-%j.err              # Error file
 #SBATCH --partition=gpu-v100-32gb         # Specify the GPU partition
 #SBATCH --gres=gpu:2                      # Request 2 GPUs
 #SBATCH --mem=64G                         # Memory total in GB
