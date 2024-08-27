@@ -17,6 +17,7 @@ You may want to write your own script with your datasets and other customization
 
 import logging
 import os
+import sys
 from collections import OrderedDict
 from typing import Any, Dict, List, Set
 import torch
@@ -299,12 +300,11 @@ def main(args):
 
 
 if __name__ == "__main__":
+    # Filter out the --local_rank argument if it's present
+    sys.argv = [arg for arg in sys.argv if not arg.startswith("--local_rank")]
+
     args = default_argument_parser().parse_args()
-    # remove local_rank from args
-    try:
-        del args.local_rank
-    except:
-        pass
+
     print("Command Line Args:", args)
     launch(
         main,
