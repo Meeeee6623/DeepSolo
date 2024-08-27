@@ -300,12 +300,13 @@ def main(args):
 
 
 if __name__ == "__main__":
-    # Filter out the --local_rank argument if it's present
-    sys.argv = [arg for arg in sys.argv if not arg.startswith("--local_rank")]
+    parser = default_argument_parser()
 
-    args = default_argument_parser().parse_args()
+    # Parse known and unknown arguments
+    args, unknown = parser.parse_known_args()
 
     print("Command Line Args:", args)
+    print("Unknown Args:", unknown)
     launch(
         main,
         args.num_gpus,
