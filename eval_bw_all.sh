@@ -5,7 +5,7 @@
 #SBATCH --error=./slurm-runs/error-%j.err              # Error file
 #SBATCH --partition=OOD_gpu_32gb          # Specify the GPU partition
 #SBATCH --gres=gpu:1                      # Request 1 GPU
-#SBATCH --mem=256G                         # Memory total in GB
+#SBATCH --mem=64G                         # Memory total in GB
 #SBATCH --ntasks=1                        # Run on a single CPU
 #SBATCH --cpus-per-task=16                 # Number of CPU cores per task
 

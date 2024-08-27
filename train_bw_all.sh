@@ -5,7 +5,7 @@
 #SBATCH --error=./training/error-%j.err              # Error file
 #SBATCH --partition=OOD_gpu_32gb         # Specify the GPU partition
 #SBATCH --gres=gpu:2                      # Request 2 GPUs
-#SBATCH --mem=64G                         # Memory total in GB
+#SBATCH --mem=191844                         # Max memory available for node
 #SBATCH --ntasks=1                        # Run on a single CPU
 #SBATCH --cpus-per-task=48                 # Number of CPU cores per task
 
