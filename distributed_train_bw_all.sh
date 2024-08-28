@@ -2,8 +2,8 @@
 
 #SBATCH --job-name=distributed_pretrain_film                       # Job name
 #SBATCH --nodes=5
-#SBATCH --output=./training/result-%j.out            # Standard output and error log
-#SBATCH --error=./training/error-%j.err              # Error file
+#SBATCH --output=./training/result-%j-%N.out            # Standard output and error log
+#SBATCH --error=./training/error-%j-%N.err              # Error file
 #SBATCH --partition=OOD_gpu_32gb         # Specify the GPU partition
 #SBATCH --gres=gpu:2                      # Request 2 GPUs
 #SBATCH --mem=191844                         # Max memory available for node
