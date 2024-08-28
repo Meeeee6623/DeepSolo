@@ -42,13 +42,13 @@ export NCCL_SOCKET_IFNAME=^docker0,lo
 # Run the distributed training script
 srun conda run python -m torch.distributed.run \
     --nproc_per_node=$NUM_GPUS_PER_NODE \
-    --nnodes=$NUM_NODES \
-    --node_rank=$SLURM_NODEID \
+    --nnodes="$NUM_NODES" \
+    --node_rank="$SLURM_NODEID" \
     --rdzv_backend=c10d \
-    --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
+    --rdzv_endpoint="$MASTER_ADDR":$MASTER_PORT \
     tools/train_net.py \
     --config-file configs/R_50/film/train_bw.yaml \
     --num-gpus $WORLD_SIZE \
-    --num-machines $NUM_NODES \
-    --machine-rank $SLURM_NODEID \
-    SOLVER.IMS_PER_BATCH 32
+    --num-machines "$NUM_NODES" \
+    --machine-rank "$SLURM_NODEID" \
+    SOLVER.IMS_PER_BATCH 16
