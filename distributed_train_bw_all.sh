@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=distributed_pretrain_film    # Job name
-#SBATCH --nodes=1                               # Number of nodes
+#SBATCH --nodes=4                               # Number of nodes
 #SBATCH --output=./training/result-%j-%N.out    # Standard output log (per node)
 #SBATCH --error=./training/error-%j-%N.err      # Error log (per node)
 #SBATCH --partition=OOD_gpu_32gb                # Specify the GPU partition
@@ -9,7 +9,6 @@
 #SBATCH --mem=191844                            # Max memory available for node
 #SBATCH --cpus-per-task=48                      # Number of CPU cores per task
 #SBATCH --ntasks-per-node=1                     # Number of tasks (1 per node)
-#SBATCH --nodelist=node365                      # Run on 365 because it's the only one in the partition that actually has 32GB GPUs
 
 hostname
 
@@ -37,7 +36,7 @@ NUM_NODES=$SLURM_NNODES
 NUM_GPUS_PER_NODE=2
 
 # set 1 image per GPU due to memory constraints...
-export TOTAL_GPUS=$((NUM_NODES * NUM_GPUS_PER_NODE * 2))
+export TOTAL_GPUS=$((NUM_NODES * NUM_GPUS_PER_NODE * 1))
 
 # Set the necessary environment variables for torch.distributed
 export NCCL_DEBUG=INFO
