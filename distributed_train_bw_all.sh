@@ -25,6 +25,8 @@ python --version
 export MASTER_ADDR=$(scontrol show hostname "$SLURM_NODELIST" | head -n 1)
 export MASTER_PORT=14567
 
+echo "Master url: " "$MASTER_ADDR":$MASTER_PORT
+
 # Set OMP_NUM_THREADS
 export OMP_NUM_THREADS=16 # 16 CPU cores per task
 
