@@ -51,7 +51,7 @@ do
         --num-machines="$SLURM_NTASKS" \
         --dist-url "tcp://$MASTER_ADDR:$MASTER_PORT" \
         --resume \
-        SOLVER.IMS_PER_BATCH 20 &
+        SOLVER.IMS_PER_BATCH 10 &
 done
 
 # Wait for all the background jobs to finish
