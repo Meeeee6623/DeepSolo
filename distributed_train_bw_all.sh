@@ -39,6 +39,8 @@ WORLD_SIZE=$(($NUM_NODES * $NUM_GPUS_PER_NODE))
 export NCCL_DEBUG=INFO
 export NCCL_SOCKET_IFNAME=^docker0,lo
 
+echo "SLURM_PROCID: $SLURM_PROCID"
+echo "SLURM_NTASKS: $SLURM_NTASKS"
 echo "SLURM_NODEID: $SLURM_NODEID"
 
 
@@ -46,11 +48,11 @@ echo "SLURM_NODEID: $SLURM_NODEID"
 srun conda run python -m torch.distributed.run \
     --nproc_per_node=$NUM_GPUS_PER_NODE \
     --nnodes="$NUM_NODES" \
-    --node_rank="$SLURM_NODEID" \
     --rdzv_backend=c10d \
     --rdzv_endpoint="$MASTER_ADDR:$MASTER_PORT" \
     --rdzv_id="$SLURM_JOB_ID" \
     tools/train_net.py \
     --config-file configs/R_50/film/train_bw.yaml \
     --num-gpus="$WORLD_SIZE" \
-    SOLVER.IMS_PER_BATCH 16
+    --resume \
+    --opts SOLVER.IMS_PER_BATCH 16
