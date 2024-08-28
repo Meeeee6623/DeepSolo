@@ -36,7 +36,7 @@ NUM_NODES=$SLURM_NNODES
 NUM_GPUS_PER_NODE=2
 
 # set 1 image per GPU due to memory constraints...
-export TOTAL_GPUS=$((NUM_NODES * NUM_GPUS_PER_NODE))
+export TOTAL_GPUS=$((NUM_NODES * NUM_GPUS_PER_NODE * 2))
 
 # Set the necessary environment variables for torch.distributed
 export NCCL_DEBUG=INFO
