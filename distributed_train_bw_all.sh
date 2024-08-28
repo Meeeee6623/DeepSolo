@@ -46,9 +46,11 @@ echo "SLURM_NODEID: $SLURM_NODEID"
 srun conda run python -m torch.distributed.run \
     --nproc_per_node=$NUM_GPUS_PER_NODE \
     --nnodes="$NUM_NODES" \
-    --rdzv_backend=c10d \
-    --rdzv_id="$SLURM_JOB_ID" \
-    --rdzv_endpoint="$MASTER_ADDR":$MASTER_PORT \
+    --node_rank="$SLURM_NODEID" \
+    --master_addr="$(scontrol show hostname "$SLURM_NODELIST" | head -n 1)" \
+    --master_port=29500 \
     tools/train_net.py \
     --config-file configs/R_50/film/train_bw.yaml \
+    --num-gpus="$WORLD_SIZE" \
+    -- num-machines="$NUM_NODES" \
     SOLVER.IMS_PER_BATCH 16
