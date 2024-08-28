@@ -7,7 +7,7 @@
 #SBATCH --partition=OOD_gpu_32gb                # Specify the GPU partition
 #SBATCH --gres=gpu:2                            # Request 2 GPUs per node
 #SBATCH --mem=191844                            # Max memory available for node
-#SBATCH --cpus-per-task=16                      # Number of CPU cores per task
+#SBATCH --cpus-per-task=48                      # Number of CPU cores per task
 #SBATCH --ntasks=5                              # Number of tasks (1 per node)
 
 hostname
