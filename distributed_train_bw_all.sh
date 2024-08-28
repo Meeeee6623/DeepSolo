@@ -50,5 +50,4 @@ srun conda run python -m torch.distributed.run \
     --rdzv_endpoint="$MASTER_ADDR":$MASTER_PORT \
     tools/train_net.py \
     --config-file configs/R_50/film/train_bw.yaml \
-    --num-machines "$NUM_NODES" \
     SOLVER.IMS_PER_BATCH 16
