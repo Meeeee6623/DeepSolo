@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=distributed_pretrain_film                       # Job name
-#SBATCH --nodes=4
+#SBATCH --nodes=5
 #SBATCH --output=./training/result-%j.out            # Standard output and error log
 #SBATCH --error=./training/error-%j.err              # Error file
 #SBATCH --partition=OOD_gpu_32gb         # Specify the GPU partition
@@ -47,6 +47,7 @@ srun conda run python -m torch.distributed.run \
     --nproc_per_node=$NUM_GPUS_PER_NODE \
     --nnodes="$NUM_NODES" \
     --rdzv_backend=c10d \
+    --rdzv_id="$SLURM_JOB_ID" \
     --rdzv_endpoint="$MASTER_ADDR":$MASTER_PORT \
     tools/train_net.py \
     --config-file configs/R_50/film/train_bw.yaml \
