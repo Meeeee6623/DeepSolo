@@ -39,18 +39,14 @@ export NCCL_SOCKET_IFNAME=^docker0,lo
 # Run the distributed training script on each node independently
 for NODE_RANK in $(seq 0 $((NUM_NODES - 1)))
 do
-    echo "SLURM_PROCID: $SLURM_PROCID"
-    echo "SLURM_NTASKS: $SLURM_NTASKS"
-    echo "SLURM_NODEID: $SLURM_NODEID"
-
     srun --nodes=1 --ntasks=1 --exclusive -w "$(scontrol show hostname "$SLURM_NODELIST" | sed -n "$((NODE_RANK + 1))p")" \
         --output=./training/job_"${SLURM_JOB_ID}"_node_"${NODE_RANK}".out \
         --error=./training/job_"${SLURM_JOB_ID}"_node_"${NODE_RANK}".err \
         conda run python tools/train_net.py \
         --config-file configs/R_50/film/train_bw.yaml \
         --num-gpus="$NUM_GPUS_PER_NODE" \
-        --machine_rank="$NODE_RANK" \
-        --num_machines="$SLURM_NTASKS" \
+        --machine-rank="$NODE_RANK" \
+        --num-machines="$SLURM_NTASKS" \
         --dist-url "tcp://$MASTER_ADDR:$MASTER" \
         --resume \
         --opts SOLVER.IMS_PER_BATCH 16 &
