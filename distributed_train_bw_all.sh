@@ -42,9 +42,9 @@ export NCCL_SOCKET_IFNAME=^docker0,lo
 # Run the distributed training script on each node independently
 for NODE_RANK in $(seq 0 $(($NUM_NODES - 1)))
 do
-    srun --nodes=1 --ntasks=1 --exclusive -w $(scontrol show hostname $SLURM_NODELIST | sed -n "$(($NODE_RANK + 1))p") \
-        --output=./training/logs/job_${SLURM_JOB_ID}_node_${NODE_RANK}.out \
-        --error=./training/logs/job_${SLURM_JOB_ID}_node_${NODE_RANK}.err \
+    srun --nodes=1 --ntasks=1 --exclusive -w "$(scontrol show hostname $SLURM_NODELIST | sed -n "$(($NODE_RANK + 1))p")" \
+        --output=./training/job_${SLURM_JOB_ID}_node_${NODE_RANK}.out \
+        --error=./training/job_${SLURM_JOB_ID}_node_${NODE_RANK}.err \
         conda run python -m torch.distributed.run \
         --nproc_per_node=$NUM_GPUS_PER_NODE \
         --nnodes="$NUM_NODES" \
