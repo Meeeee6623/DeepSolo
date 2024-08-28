@@ -1,14 +1,14 @@
 #!/bin/bash
 
-#SBATCH --job-name=distributed_pretrain_film                       # Job name
-#SBATCH --nodes=5
-#SBATCH --output=./training/result-%j-%N.out            # Standard output and error log
-#SBATCH --error=./training/error-%j-%N.err              # Error file
-#SBATCH --partition=OOD_gpu_32gb         # Specify the GPU partition
-#SBATCH --gres=gpu:2                      # Request 2 GPUs
-#SBATCH --mem=191844                         # Max memory available for node
-#SBATCH --cpus-per-task=16                 # Number of CPU cores per task
-#SBATCH --ntasks-per-node=2
+#SBATCH --job-name=distributed_pretrain_film    # Job name
+#SBATCH --nodes=5                               # Number of nodes
+#SBATCH --output=./training/result-%j-%N.out    # Standard output log (per node)
+#SBATCH --error=./training/error-%j-%N.err      # Error log (per node)
+#SBATCH --partition=OOD_gpu_32gb                # Specify the GPU partition
+#SBATCH --gres=gpu:2                            # Request 2 GPUs per node
+#SBATCH --mem=191844                            # Max memory available for node
+#SBATCH --cpus-per-task=16                      # Number of CPU cores per task
+#SBATCH --ntasks=5                              # Number of tasks (1 per node)
 
 hostname
 
@@ -22,7 +22,7 @@ which python
 python --version
 
 # Set the master node and its port
-export MASTER_ADDR=$(scontrol show hostname "$SLURM_NODELIST" | head -n 1)
+export MASTER_ADDR=$(scontrol show hostname $SLURM_NODELIST | head -n 1)
 export MASTER_PORT=14567
 
 # Set OMP_NUM_THREADS
@@ -39,20 +39,25 @@ WORLD_SIZE=$(($NUM_NODES * $NUM_GPUS_PER_NODE))
 export NCCL_DEBUG=INFO
 export NCCL_SOCKET_IFNAME=^docker0,lo
 
-echo "SLURM_PROCID: $SLURM_PROCID"
-echo "SLURM_NTASKS: $SLURM_NTASKS"
-echo "SLURM_NODEID: $SLURM_NODEID"
+# Run the distributed training script on each node independently
+for NODE_RANK in $(seq 0 $(($NUM_NODES - 1)))
+do
+    srun --nodes=1 --ntasks=1 --exclusive -w $(scontrol show hostname $SLURM_NODELIST | sed -n "$(($NODE_RANK + 1))p") \
+        --output=./training/logs/job_${SLURM_JOB_ID}_node_${NODE_RANK}.out \
+        --error=./training/logs/job_${SLURM_JOB_ID}_node_${NODE_RANK}.err \
+        conda run python -m torch.distributed.run \
+        --nproc_per_node=$NUM_GPUS_PER_NODE \
+        --nnodes="$NUM_NODES" \
+        --node_rank="$NODE_RANK" \
+        --rdzv_backend=c10d \
+        --rdzv_endpoint="$MASTER_ADDR:$MASTER_PORT" \
+        --rdzv_id="$SLURM_JOB_ID" \
+        tools/train_net.py \
+        --config-file configs/R_50/film/train_bw.yaml \
+        --num-gpus="$WORLD_SIZE" \
+        --resume \
+        --opts SOLVER.IMS_PER_BATCH 16 &
+done
 
-
-# Run the distributed training script
-srun conda run python -m torch.distributed.run \
-    --nproc_per_node=$NUM_GPUS_PER_NODE \
-    --nnodes="$NUM_NODES" \
-    --rdzv_backend=c10d \
-    --rdzv_endpoint="$MASTER_ADDR:$MASTER_PORT" \
-    --rdzv_id="$SLURM_JOB_ID" \
-    tools/train_net.py \
-    --config-file configs/R_50/film/train_bw.yaml \
-    --num-gpus="$WORLD_SIZE" \
-    --resume \
-    --opts SOLVER.IMS_PER_BATCH 16
+# Wait for all the background jobs to finish
+wait
