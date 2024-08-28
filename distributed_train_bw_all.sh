@@ -46,7 +46,6 @@ echo "SLURM_NODEID: $SLURM_NODEID"
 srun conda run python -m torch.distributed.run \
     --nproc_per_node=$NUM_GPUS_PER_NODE \
     --nnodes="$NUM_NODES" \
-    --node_rank="$SLURM_NODEID" \
     --rdzv_backend=c10d \
     --rdzv_endpoint="$MASTER_ADDR":$MASTER_PORT \
     tools/train_net.py \
