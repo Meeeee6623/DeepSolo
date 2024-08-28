@@ -49,7 +49,7 @@ do
         --num-gpus="$NUM_GPUS_PER_NODE" \
         --machine-rank="$NODE_RANK" \
         --num-machines="$SLURM_NTASKS" \
-        --dist-url "tcp://$MASTER_ADDR:$MASTER" \
+        --dist-url "tcp://$MASTER_ADDR:$MASTER_PORT" \
         --resume \
         SOLVER.IMS_PER_BATCH 16 &
 done
