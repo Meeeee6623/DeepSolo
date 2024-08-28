@@ -39,6 +39,9 @@ WORLD_SIZE=$(($NUM_NODES * $NUM_GPUS_PER_NODE))
 export NCCL_DEBUG=INFO
 export NCCL_SOCKET_IFNAME=^docker0,lo
 
+echo "SLURM_NODEID: $SLURM_NODEID"
+
+
 # Run the distributed training script
 srun conda run python -m torch.distributed.run \
     --nproc_per_node=$NUM_GPUS_PER_NODE \
