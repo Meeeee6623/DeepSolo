@@ -9,6 +9,7 @@
 #SBATCH --mem=191844                            # Max memory available for node
 #SBATCH --cpus-per-task=48                      # Number of CPU cores per task
 #SBATCH --ntasks-per-node=1                     # Number of tasks (1 per node)
+#SBATCH --dependency=singleton                  # allow queuing multiple times
 
 hostname
 
