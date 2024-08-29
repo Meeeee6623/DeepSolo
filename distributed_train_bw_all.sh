@@ -13,6 +13,14 @@
 
 hostname
 
+# If output/R50/150k_tt_mlt_13_15_textocr/train_bw/model_final.pth exists, cancel all jobs with same name and exit
+if [ -f output/R50/150k_tt_mlt_13_15_textocr/train_bw/model_final.pth ]; then
+    echo "Training already completed"
+    scancel --jobname "$SLURM_JOB_NAME"
+    exit
+fi
+
+
 module add cuda/11.1
 module add python3/anaconda/2020.02
 source activate deepsolo
